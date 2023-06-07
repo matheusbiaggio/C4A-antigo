@@ -4,8 +4,8 @@ export const HeaderContainer = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 93vw;
-  height: 6vh;
+  width: calc(100vw - 70px);
+  height: 60px;
   background-color: #e8eaf7;
   padding: 10px;
 
