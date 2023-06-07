@@ -5,31 +5,34 @@ import FunctionIcon from '../images/Function.svg';
 import InfoIcon from '../images/Info.svg';
 import MenuIcon from '../images/Menu.svg';
 import ShieldIcon from '../images/Shield.svg';
-import { NavbarContainer } from '../style/Navbar';
+import { 
+  IconsButton, IconsContainer, IconsImg, IconsLogoContainer, LogoImg,
+  NavbarContainer
+} from '../style/Navbar';
 
 export default function Navbar() {
   return (
     <NavbarContainer>
-      <div>
-        <img src={ Logo } alt="Logo" />
-        <div>
-          <button>
-            <img src={ FunctionIcon } alt="FunctionIcon" />
-          </button>
-          <button>
-            <img src={ ShieldIcon } alt="ShieldIcon" />
-          </button>
-          <button>
-            <img src={ InfoIcon } alt="InfoIcon" />
-          </button>
-          <button>
-            <img src={ ExitIcon } alt="ExitIcon" />
-          </button>
-        </div>
-      </div>
-      <button>
-        <img src={ MenuIcon } alt="MenuIcon" />
-      </button>
+      <IconsLogoContainer>
+        <LogoImg src={ Logo } alt="Logo" />
+        <IconsContainer>
+          <IconsButton>
+            <IconsImg src={ FunctionIcon } alt="FunctionIcon" />
+          </IconsButton>
+          <IconsButton>
+            <IconsImg src={ ShieldIcon } alt="ShieldIcon" />
+          </IconsButton>
+          <IconsButton>
+            <IconsImg src={ InfoIcon } alt="InfoIcon" />
+          </IconsButton>
+          <IconsButton>
+            <IconsImg src={ ExitIcon } alt="ExitIcon" />
+          </IconsButton>
+        </IconsContainer>
+      </IconsLogoContainer>
+      <IconsButton>
+        <IconsImg src={ MenuIcon } alt="MenuIcon" />
+      </IconsButton>
     </NavbarContainer>
   )
 }
