@@ -9,6 +9,7 @@ export const NavbarContainer = styled.nav`
   width: 7vw;
   height: 100vh;
   border-right: 1px solid black;
+  background-color: #e8eaf7;
 `
 
 export const LogoImg = styled.img`
