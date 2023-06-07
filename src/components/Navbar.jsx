@@ -5,10 +5,11 @@ import FunctionIcon from '../images/Function.svg';
 import InfoIcon from '../images/Info.svg';
 import MenuIcon from '../images/Menu.svg';
 import ShieldIcon from '../images/Shield.svg';
+import { NavbarContainer } from '../style/Navbar';
 
 export default function Navbar() {
   return (
-    <nav>
+    <NavbarContainer>
       <div>
         <img src={ Logo } alt="Logo" />
         <div>
@@ -29,6 +30,6 @@ export default function Navbar() {
       <button>
         <img src={ MenuIcon } alt="MenuIcon" />
       </button>
-    </nav>
+    </NavbarContainer>
   )
 }

@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 
-export const Navbar = styled.nav`
-  
+export const NavbarContainer = styled.nav`
+  width: 10vw;
+  background-color: red;
 `
