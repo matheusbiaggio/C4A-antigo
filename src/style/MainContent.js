@@ -79,3 +79,31 @@ export const CircleContainer = styled.div `
   gap: 5px;
   padding: 15px;
 `
+
+export const EditContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 30px;
+
+  color: red;
+`
+
+export const ContainerBlocks = styled.div`
+  flex-grow: 1;
+`
+
+export const BlockStyle = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+
+  width: 70px;
+  height: 30px;
+  margin: 5px;
+
+  background-color: #29545A;
+`

@@ -1,25 +1,38 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import EditIcon from '../images/edit.svg';
 import { 
   Button,
   Circle,
   CircleContainer,
+  ContainerBlocks,
+  EditContainer,
   FooterHeader,
   HeaderContainer, Img, MainContainer, TitleHeader
 } from '../style/MainContent';
+import CardBlocks from './CardBlocks';
+import AppContext from '../context/AppContext';
 
 export default function MainContent() {
+  const { isEdit, setIsEdit } = useContext(AppContext);
+
   return (
     <MainContainer>
       <HeaderContainer>
         <TitleHeader>Bloco 1</TitleHeader>
-        <Button>
+        <Button
+          onClick={ () => setIsEdit(!isEdit)}
+        >
           <Img src={ EditIcon } alt="EditIcon" />
         </Button>
       </HeaderContainer>
-      <main>
-
-      </main>
+      <EditContainer>
+        {isEdit && (
+          <p>Modo de edição</p>
+        )}
+      </EditContainer>
+      <ContainerBlocks>
+        <CardBlocks />
+      </ContainerBlocks>
       <FooterHeader>
         <CircleContainer>
           <Circle color="white" />

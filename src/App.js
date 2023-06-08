@@ -4,14 +4,17 @@ import {
 } from 'react-router-dom';
 import './App.css';
 import Home from "./pages/Home";
+import AppProvider from "./provider/AppProvider";
 
 
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route exact path="/" element={ <Home /> } />
-      </Routes>
+      <AppProvider>
+        <Routes>
+          <Route exact path="/" element={ <Home /> } />
+        </Routes>
+      </AppProvider>
     </BrowserRouter>
   );
 }
