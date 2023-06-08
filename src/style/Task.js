@@ -56,3 +56,24 @@ export const TitleHeader = styled.h3`
 
   color: #FFFFFF;
 `
+
+export const ContainerBlocks = styled.div`
+  flex-grow: 1;
+
+  height: 100%;
+  overflow-y: auto;
+`
+
+export const BlockStyle = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+
+  width: calc(100% - 10px);
+  height: 30px;
+  margin: 5px;
+
+  background-color: #29545A;
+`

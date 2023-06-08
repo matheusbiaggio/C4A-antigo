@@ -91,6 +91,9 @@ export const EditContainer = styled.div`
 `
 
 export const ContainerBlocks = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  
   flex-grow: 1;
 `
 

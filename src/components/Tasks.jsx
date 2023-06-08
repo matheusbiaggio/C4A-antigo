@@ -1,7 +1,9 @@
 import React, { useContext } from 'react';
 import AddIcon from '../images/add.svg';
 import { 
+  BlockStyle,
   Button,
+  ContainerBlocks,
   HeaderContainer,
   Img,
   MainContainer,
@@ -29,9 +31,17 @@ export default function Tasks() {
           <Img src={ AddIcon } alt="AddIcon" />
         </Button>
       </HeaderContainer>
-      <main>
-
-      </main>
+      <ContainerBlocks>
+        {
+          blocks.length > 0 && (
+            blocks.map((block, index) => 
+            <BlockStyle key={index}>
+              {block.name}
+            </BlockStyle>
+            )
+          )
+        }
+      </ContainerBlocks>
     </MainContainer>
   )
 }

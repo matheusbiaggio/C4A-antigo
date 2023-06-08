@@ -4,13 +4,12 @@ import {
   Button,
   Circle,
   CircleContainer,
-  ContainerBlocks,
   EditContainer,
   FooterHeader,
   HeaderContainer, Img, MainContainer, TitleHeader
 } from '../style/MainContent';
-import CardBlocks from './CardBlocks';
 import AppContext from '../context/AppContext';
+import Block from './Block';
 
 export default function MainContent() {
   const { isEdit, setIsEdit } = useContext(AppContext);
@@ -30,9 +29,7 @@ export default function MainContent() {
           <p>Modo de edição</p>
         )}
       </EditContainer>
-      <ContainerBlocks>
-        <CardBlocks />
-      </ContainerBlocks>
+      <Block />
       <FooterHeader>
         <CircleContainer>
           <Circle color="white" />
