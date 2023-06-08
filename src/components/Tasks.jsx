@@ -20,7 +20,7 @@ export default function Tasks() {
     setIsEdit(true);
     setBlocks([...blocks, {
       id: blocks.length,
-      name: blocks.length,
+      name: (blocks.length).toString(),
       status: 'N/A',
       x: 0,
       y: 0,
