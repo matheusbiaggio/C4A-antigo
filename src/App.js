@@ -1,10 +1,20 @@
-
+import React from "react";
+import {
+  BrowserRouter, Routes, Route,
+} from 'react-router-dom';
+import './App.css';
+import Home from "./pages/Home";
+import AppProvider from "./provider/AppProvider";
 
 function App() {
   return (
-    <div>
-      App
-    </div>
+    <BrowserRouter>
+      <AppProvider>
+        <Routes>
+          <Route exact path="/" element={ <Home /> } />
+        </Routes>
+      </AppProvider>
+    </BrowserRouter>
   );
 }
 
