@@ -98,6 +98,7 @@ export const ContainerBlocks = styled.div`
 `
 
 export const BlockStyle = styled.div`
+  position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -109,4 +110,6 @@ export const BlockStyle = styled.div`
   margin: 5px;
 
   background-color: #29545A;
+
+  cursor: grab;
 `
