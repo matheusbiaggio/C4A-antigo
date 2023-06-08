@@ -21,7 +21,7 @@ export default function Tasks() {
     setBlocks([...blocks, {
       id: blocks.length,
       name: blocks.length,
-      state: 'Liberado',
+      status: 'N/A',
       x: 0,
       y: 0,
     }])
@@ -41,7 +41,10 @@ export default function Tasks() {
         {
           blocks.length > 0 && (
             blocks.map((block, index) => 
-            <BlockStyle key={index}>
+            <BlockStyle
+              key={index}
+              status={block.status}
+            >
               {block.name}
             </BlockStyle>
             )

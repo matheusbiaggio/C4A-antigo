@@ -103,13 +103,27 @@ export const BlockStyle = styled.div`
   justify-content: center;
   align-items: center;
   text-align: center;
-  color: white;
 
   width: 70px;
   height: 30px;
   margin: 5px;
 
-  background-color: #29545A;
+  color: ${({ status }) => {
+    return status === 'N/A' || status === 'Fila' 
+    ? 'black' : 'white';
+  }};
+  background-color: ${({ status }) => {
+    switch (status) {
+      case 'N/A':
+        return 'white';
+      case 'Fila':
+        return 'yellow';
+      case 'Liberado':
+        return 'green';
+      default:
+        return 'red';
+    }
+  }};
 
   cursor: grab;
 `;

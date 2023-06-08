@@ -85,6 +85,7 @@ export default function Block() {
                 onDrag={(e, data) => handleDrag(index, e, data, block)}
               >
                 <BlockStyle
+                  status={block.status}
                   onDoubleClick={() => handleDoubleClick(block)}
                 >
                   {block.name}
@@ -92,6 +93,7 @@ export default function Block() {
               </Draggable>
             ) : (
               <BlockStyle
+                status={block.status}
                 style={{
                   position: 'absolute',
                   left: `${previousPosition[index]?.x + 80}px`,
