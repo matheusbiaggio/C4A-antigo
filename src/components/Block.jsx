@@ -68,6 +68,15 @@ export default function Block() {
     setPreviousPosition(divPositions);
   }, [divPositions]);
 
+  useEffect(() => {
+    const initialPositions = blocks.map((block) => ({
+      x: block.x || 0,
+      y: block.y || 0,
+    }));
+    setDivPositions(initialPositions);
+  }, [blocks]);
+  
+
   return (
     <ContainerBlocks ref={containerRef}>
       {blocks.length > 0 &&
