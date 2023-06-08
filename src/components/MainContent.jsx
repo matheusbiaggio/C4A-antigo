@@ -31,7 +31,7 @@ export default function MainContent() {
         </CircleContainer>
         <CircleContainer>
           <Circle color="green" />
-          <p>LIberado</p>
+          <p>Liberado</p>
         </CircleContainer>
         <CircleContainer>
           <Circle color="red" />

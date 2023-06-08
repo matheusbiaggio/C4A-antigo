@@ -5,3 +5,7 @@ export const HomeContainer = styled.div`
   width: 100vw;
   height: 100vh;
 `
+
+export const MainContainer = styled.div`
+  display: flex;
+`
