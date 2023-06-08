@@ -1,8 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import AppContext from '../context/AppContext';
-import { 
-  BlockStyle, ContainerBlocks
-} from '../style/MainContent';
+import { BlockStyle, ContainerBlocks } from '../style/MainContent';
 import Draggable from 'react-draggable';
 
 export default function Block() {
@@ -12,10 +10,14 @@ export default function Block() {
   const [parentWidth, setParentWidth] = useState(0);
   const [parentHeight, setParentHeight] = useState(0);
   const [divPositions, setDivPositions] = useState([]);
+  const [previousPosition, setPreviousPosition] = useState([]);
 
-  const { 
-    isEdit, blocks, setBlocks,
-    setIsFormOpen, setSelectedBlock 
+  const {
+    isEdit,
+    blocks,
+    setBlocks,
+    setIsFormOpen,
+    setSelectedBlock,
   } = useContext(AppContext);
 
   const handleDoubleClick = (block) => {
@@ -23,12 +25,34 @@ export default function Block() {
       setSelectedBlock(block);
       setIsFormOpen(true);
     }
-  }
+  };
 
   const handleResize = () => {
     if (containerRef.current) {
       setParentWidth(containerRef.current.offsetWidth - widthBloco);
       setParentHeight(containerRef.current.offsetHeight - heightBloco);
+    }
+  };
+
+  const handleDrag = (index, e, data, block) => {
+    if (isEdit) {
+      const updatedDivPositions = [...divPositions];
+      updatedDivPositions[index] = { x: data.x, y: data.y };
+      setDivPositions(updatedDivPositions);
+  
+      const updatedBlocks = blocks.map((element, i) => {
+        if (i === index) {
+          return { ...element, x: data.x, y: data.y };
+        }
+        return element;
+      });
+  
+      setBlocks(updatedBlocks);
+    } else {
+      const { x, y } = previousPosition[index] || { x: 0, y: 0 };
+      const updatedBlocks = [...blocks];
+      updatedBlocks[index] = { ...block, x, y };
+      setBlocks(updatedBlocks);
     }
   };
 
@@ -40,44 +64,45 @@ export default function Block() {
     };
   }, []);
 
-  const handleDrag = (index, e, data, block) => {
-    const updatedDivPositions = [...divPositions];
-    updatedDivPositions[index] = { x: data.x, y: data.y };
-    const updatedBlocks = [...blocks];
-    updatedBlocks[index] = { ...block, x: data.x, y: data.y };
-    setBlocks(updatedBlocks);
-    setDivPositions(updatedDivPositions);
-  };
+  useEffect(() => {
+    setPreviousPosition(divPositions);
+  }, [divPositions]);
 
   return (
     <ContainerBlocks ref={containerRef}>
-      {
-        blocks.length > 0 && (
-          blocks.map((block, index) => 
-          <Draggable 
-            bounds={
-              {
-                left: 0,
-                top: 0,
-                right: parentWidth,
-                bottom: parentHeight,
-              }
-            }
-            position={divPositions[index]}
-            onDrag={(e, data) => handleDrag(index, e, data, block)}
-          >
-            <BlockStyle
-              key={index}
-              onDoubleClick={ 
-                () => handleDoubleClick(block)
-              }
-            >
-              {block.name}
-            </BlockStyle>
-          </Draggable>
-          )
-        )
-      }
+      {blocks.length > 0 &&
+        blocks.map((block, index) => (
+          <div key={index}>
+            {isEdit ? (
+              <Draggable
+                bounds={{
+                  left: 0,
+                  top: 0,
+                  right: parentWidth,
+                  bottom: parentHeight,
+                }}
+                position={divPositions[index]}
+                onDrag={(e, data) => handleDrag(index, e, data, block)}
+              >
+                <BlockStyle
+                  onDoubleClick={() => handleDoubleClick(block)}
+                >
+                  {block.name}
+                </BlockStyle>
+              </Draggable>
+            ) : (
+              <BlockStyle
+                style={{
+                  position: 'absolute',
+                  left: `${previousPosition[index]?.x + 80}px`,
+                  top: `${previousPosition[index]?.y + 140}px`,
+                }}
+              >
+                {block.name}
+              </BlockStyle>
+            )}
+          </div>
+        ))}
     </ContainerBlocks>
-  )
+  );
 }

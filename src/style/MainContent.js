@@ -112,4 +112,4 @@ export const BlockStyle = styled.div`
   background-color: #29545A;
 
   cursor: grab;
-`
+`;

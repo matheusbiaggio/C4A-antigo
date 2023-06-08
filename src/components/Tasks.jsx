@@ -18,7 +18,13 @@ export default function Tasks() {
 
   const handleAddBlock = () => {
     setIsEdit(true);
-    setBlocks([...blocks, {name: blocks.length}])
+    setBlocks([...blocks, {
+      id: blocks.length,
+      name: blocks.length,
+      state: 'Liberado',
+      x: 0,
+      y: 0,
+    }])
   }
 
   return (

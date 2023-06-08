@@ -12,14 +12,20 @@ import AppContext from '../context/AppContext';
 import Block from './Block';
 
 export default function MainContent() {
-  const { isEdit, setIsEdit } = useContext(AppContext);
+  const { 
+    isEdit, setIsEdit
+  } = useContext(AppContext);
+
+  const handleChangeEdit = () => {
+    setIsEdit(!isEdit);
+  }
 
   return (
     <MainContainer>
       <HeaderContainer>
         <TitleHeader>Bloco 1</TitleHeader>
         <Button
-          onClick={ () => setIsEdit(!isEdit)}
+          onClick={ handleChangeEdit}
         >
           <Img src={ EditIcon } alt="EditIcon" />
         </Button>
