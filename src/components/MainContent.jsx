@@ -21,18 +21,20 @@ export default function MainContent() {
   }
 
   return (
-    <MainContainer>
-      <HeaderContainer isEdit={isEdit} >
-        <TitleHeader isEdit={isEdit}>Bloco 1</TitleHeader>
+    <MainContainer isEdit={isEdit} >
+      <HeaderContainer>
+        <TitleHeader>Bloco 1</TitleHeader>
         <Button
           onClick={ handleChangeEdit}
         >
           <Img src={ EditIcon } alt="EditIcon" />
         </Button>
       </HeaderContainer>
-      <EditContainer>
-        {isEdit && (
+      <EditContainer isEdit={isEdit}>
+        {isEdit ? (
           <p>Modo de edição</p>
+        ) : (
+          <p>Modo de vizualização</p>
         )}
       </EditContainer>
       <Block />
