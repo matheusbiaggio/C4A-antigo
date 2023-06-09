@@ -25,7 +25,9 @@ export const HeaderContainer = styled.header`
   border-top-right-radius: 18px;
   border-top-left-radius: 18px;
 
-  background-color: #29545A;
+  background-color: ${({isEdit}) => (
+    isEdit === true ? 'yellow' : '#29545A'
+  )};
 `
 
 export const Img = styled.img`
@@ -54,7 +56,9 @@ export const TitleHeader = styled.h3`
 
   letter-spacing: 0.065em;
 
-  color: #FFFFFF;
+  color: ${({isEdit}) => (
+    isEdit === true ? 'black' : 'white'
+  )};
 `
 
 export const FooterHeader = styled.footer`
