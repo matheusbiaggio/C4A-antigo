@@ -127,7 +127,6 @@ export default function Block() {
                   top: `${((block.porcentY * parentHeight) / 100) + 140}px`,
                 }}              
               >
-                {console.log(previousPosition[index])}
                 {block.name}
               </BlockStyle>
             )}
