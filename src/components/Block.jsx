@@ -37,21 +37,31 @@ export default function Block() {
   const handleDrag = (index, e, data, block) => {
     if (isEdit) {
       const updatedDivPositions = [...divPositions];
-      updatedDivPositions[index] = { x: data.x, y: data.y };
+      const porcentX = (data.x * 100) / (containerRef.current.offsetWidth - 80);
+      const porcentY = (data.y * 100) / (containerRef.current.offsetHeight - 40);
+      updatedDivPositions[index] = { 
+        x: data.x, 
+        porcentX: porcentX, 
+        y: data.y, 
+        porcentY: porcentY };
       setDivPositions(updatedDivPositions);
   
       const updatedBlocks = blocks.map((element, i) => {
         if (i === index) {
-          return { ...element, x: data.x, y: data.y };
+          return { ...element, 
+            x: data.x, 
+            porcentX: porcentX, 
+            y: data.y, 
+            porcentY: porcentY };
         }
         return element;
       });
   
       setBlocks(updatedBlocks);
     } else {
-      const { x, y } = previousPosition[index] || { x: 0, y: 0 };
+      const { x, y } = previousPosition[index] || { x: 0, y: 0, porcentX: 0, porcentY: 0 };
       const updatedBlocks = [...blocks];
-      updatedBlocks[index] = { ...block, x, y };
+      updatedBlocks[index] = { ...block, x, y, porcentX: 0, porcentY: 0 };
       setBlocks(updatedBlocks);
     }
   };
@@ -72,9 +82,12 @@ export default function Block() {
     const initialPositions = blocks.map((block) => ({
       x: block.x || 0,
       y: block.y || 0,
+      porcentX: block.porcentX || ((100 * 79) / parentWidth),
+      porcentY: block.porcentY || ((100 * 113) / parentHeight),
     }));
     setDivPositions(initialPositions);
-  }, [blocks]);
+    setPreviousPosition(initialPositions);
+  }, [blocks, parentWidth, parentHeight]);
   
 
   return (
@@ -105,10 +118,11 @@ export default function Block() {
                 status={block.status}
                 style={{
                   position: 'absolute',
-                  left: `${previousPosition[index]?.x + 80}px`,
-                  top: `${previousPosition[index]?.y + 140}px`,
-                }}
+                  left: `${((block.porcentX * parentWidth) / 100) + 80}px`,
+                  top: `${((block.porcentY * parentHeight) / 100) + 140}px`,
+                }}              
               >
+                {console.log(previousPosition[index])}
                 {block.name}
               </BlockStyle>
             )}

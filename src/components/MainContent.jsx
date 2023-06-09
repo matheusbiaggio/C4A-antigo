@@ -22,8 +22,8 @@ export default function MainContent() {
 
   return (
     <MainContainer>
-      <HeaderContainer>
-        <TitleHeader>Bloco 1</TitleHeader>
+      <HeaderContainer isEdit={isEdit} >
+        <TitleHeader isEdit={isEdit}>Bloco 1</TitleHeader>
         <Button
           onClick={ handleChangeEdit}
         >
