@@ -10,6 +10,9 @@ export const MainContainer = styled.div`
 
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.51);
   border-radius: 18px;
+  border: ${({isEdit}) => (
+    isEdit === true && '1px solid red'
+  )};
 
   background-color: #e8eaf7;
 `;
@@ -25,9 +28,7 @@ export const HeaderContainer = styled.header`
   border-top-right-radius: 18px;
   border-top-left-radius: 18px;
 
-  background-color: ${({isEdit}) => (
-    isEdit === true ? 'yellow' : '#29545A'
-  )};
+  background-color: #29545A;
 `
 
 export const Img = styled.img`
@@ -56,9 +57,7 @@ export const TitleHeader = styled.h3`
 
   letter-spacing: 0.065em;
 
-  color: ${({isEdit}) => (
-    isEdit === true ? 'black' : 'white'
-  )};
+  color: #FFFFFF;
 `
 
 export const FooterHeader = styled.footer`
@@ -90,8 +89,15 @@ export const EditContainer = styled.div`
   justify-content: center;
   width: 100%;
   height: 30px;
+  border-bottom: 1px solid #d3d3d3;
 
-  color: red;
+  color: ${({isEdit}) => (
+    isEdit === true ? (
+      'red'
+    ) : (
+      'black'
+    )
+  )};
 `
 
 export const ContainerBlocks = styled.div`

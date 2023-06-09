@@ -109,6 +109,11 @@ export default function Block() {
                 <BlockStyle
                   status={block.status}
                   onDoubleClick={() => handleDoubleClick(block)}
+                  style={{
+                    position: 'absolute',
+                    left: `${(((block.porcentX * parentWidth) / 100) + 80) - block.x}px`,
+                    top: `${(((block.porcentY * parentHeight) / 100) + 140) - block.y}px`,
+                  }}  
                 >
                   {block.name}
                 </BlockStyle>
