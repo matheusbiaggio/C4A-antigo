@@ -6,6 +6,7 @@ export default function AppProvider({ children }) {
   const [blocks, setBlocks] = useState([]);
   const [selectedBlock, setSelectedBlock] = useState({});
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const [blocksData, setBlocksData] = useState([]);
 
   useEffect(() => {
     const storedBlocks = localStorage.getItem('blocks');
@@ -15,10 +16,20 @@ export default function AppProvider({ children }) {
   }, []);
 
   useEffect(() => {
+    const storedBlocksData = localStorage.getItem('blocksData');
+    if (storedBlocksData) {
+      setBlocksData(JSON.parse(storedBlocksData));
+    }
+  }, []);
+
+  useEffect(() => {
     if (blocks.length > 0) {
       localStorage.setItem('blocks', JSON.stringify(blocks));
     }
-  }, [blocks]);
+    if (blocksData.length > 0) {
+      localStorage.setItem('blocksData', JSON.stringify(blocksData));
+    }
+  }, [blocks, blocksData]);
 
   const context = useMemo(
     () => ({
@@ -30,6 +41,8 @@ export default function AppProvider({ children }) {
       setSelectedBlock,
       isFormOpen,
       setIsFormOpen,
+      blocksData,
+      setBlocksData,
     }),
     [
       isEdit,
@@ -40,6 +53,8 @@ export default function AppProvider({ children }) {
       setSelectedBlock,
       isFormOpen,
       setIsFormOpen,
+      blocksData,
+      setBlocksData
     ]
   );
 
