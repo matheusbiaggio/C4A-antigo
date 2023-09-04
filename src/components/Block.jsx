@@ -11,7 +11,9 @@ export default function Block() {
   const [parentHeight, setParentHeight] = useState(0);
   const [divPositions, setDivPositions] = useState([]);
   const [previousPosition, setPreviousPosition] = useState([]);
-  const [selectedBlocks, setSelectedBlocks] = useState([]);
+  const [selectedBlock1, setSelectedBlock1] = useState(null);
+  const [selectedBlock2, setSelectedBlock2] = useState(null);
+  const [svgLines, setSvgLines] = useState([]);
 
   const {
     isEdit,
@@ -19,7 +21,6 @@ export default function Block() {
     setBlocks,
     setIsFormOpen,
     setSelectedBlock,
-    blocksData, setBlocksData
   } = useContext(AppContext);
 
   const handleDoubleClick = (block) => {
@@ -33,6 +34,31 @@ export default function Block() {
     if (containerRef.current) {
       setParentWidth(containerRef.current.offsetWidth - widthBloco);
       setParentHeight(containerRef.current.offsetHeight - heightBloco);
+    }
+  };
+
+  const handleBlockSelection = (block) => {
+    if (!selectedBlock1) {
+      setSelectedBlock1(block);
+    } else if (!selectedBlock2) {
+      setSelectedBlock2(block);
+      // Ao selecionar o segundo bloco, crie a linha
+      renderSvgLines(selectedBlock1, block);
+    } else {
+      setSelectedBlock1(block);
+      setSelectedBlock2(null);
+    }
+  };
+
+  const renderSvgLines = (block1, block2) => {
+    if (block1 && block2) {
+      const line = {
+        x1: block1.x + widthBloco / 2,
+        y1: block1.y + heightBloco / 2,
+        x2: block2.x + widthBloco / 2,
+        y2: block2.y + heightBloco / 2,
+      };
+      setSvgLines([...svgLines, line]);
     }
   };
 
@@ -71,21 +97,6 @@ export default function Block() {
     }
   };
 
-  const calculateCenter = (x, y) => {
-    return {
-      x: x + widthBloco / 2,
-      y: y + heightBloco / 2,
-    };
-  };
-
-  const handleBlockClick = (block) => {
-    if (selectedBlocks.length < 2) {
-      setSelectedBlocks((prevSelected) => [...prevSelected, block]);
-    } else {
-      setSelectedBlocks([block]);
-    }
-  };
-
   useEffect(() => {
     handleResize();
     window.addEventListener('resize', handleResize);
@@ -107,43 +118,27 @@ export default function Block() {
     }));
     setDivPositions(initialPositions);
     setPreviousPosition(initialPositions);
-    blocksData.length === 0 && setBlocksData(blocks.map(() => ({ connections: [] })));
   }, [blocks, parentWidth, parentHeight]);
-
-  useEffect(() => {
-    if (selectedBlocks.length === 2) {
-      const updatedBlocksData = [...blocksData];
-      updatedBlocksData.forEach((blockData, index) => {
-        if (selectedBlocks.includes(blocks[index])) {
-          blockData.connections = [...new Set([...blockData.connections, ...selectedBlocks])];
-        }
-      });
-      setBlocksData(updatedBlocksData);
-      setSelectedBlocks([]);
-    }
-  }, [blocks, blocksData, selectedBlocks]);
 
   return (
     <ContainerBlocks ref={containerRef}>
-      <svg style={{ position: 'absolute', width: 'calc(100% - 150px)', height: 'calc(100% - 200px)', pointerEvents: 'none' }}>
-        {blocksData.map((blockData, index) =>
-          blockData.connections.map((connectedBlock) => {
-            const startPoint = calculateCenter(blocks[index].x, blocks[index].y);
-            const endPoint = calculateCenter(connectedBlock.x, connectedBlock.y);
-            return (
-              <line
-                key={`${index}-${connectedBlock.id}`}
-                x1={startPoint.x}
-                y1={startPoint.y}
-                x2={endPoint.x}
-                y2={endPoint.y}
-                stroke="black"
-              />
-            );
-          })
-        )}
+      <svg
+        width="94%"
+        height="77%"
+        style={{ position: 'absolute'}}
+      >
+        {svgLines.map((line, index) => (
+          <line
+            key={index}
+            x1={line.x1}
+            y1={line.y1}
+            x2={line.x2}
+            y2={line.y2}
+            stroke="blue" // Cor da linha
+            strokeWidth="2" // Espessura da linha
+          />
+        ))}
       </svg>
-
       {blocks.map((block, index) => (
         <div key={index}>
           {isEdit ? (
@@ -158,14 +153,21 @@ export default function Block() {
               onDrag={(e, data) => handleDrag(index, e, data, block)}
             >
               <BlockStyle
+                id={block.id}
                 status={block.status}
                 onDoubleClick={() => handleDoubleClick(block)}
+                onClick={() => handleBlockSelection(block)}
+                className={
+                  (selectedBlock1 && selectedBlock1.id === block.id) ||
+                  (selectedBlock2 && selectedBlock2.id === block.id)
+                    ? "selected"
+                    : ""
+                }
                 style={{
                   position: 'absolute',
                   left: `${(((block.porcentX * parentWidth) / 100) + 80) - block.x}px`,
                   top: `${(((block.porcentY * parentHeight) / 100) + 140) - block.y}px`,
                 }}
-                onClick={() => handleBlockClick(block)}
               >
                 {block.name}
               </BlockStyle>
@@ -187,3 +189,4 @@ export default function Block() {
     </ContainerBlocks>
   );
 }
+

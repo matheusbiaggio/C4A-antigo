@@ -136,4 +136,10 @@ export const BlockStyle = styled.div`
   }};
 
   cursor: grab;
+`
+
+export const Line = styled.line`
+  stroke: blue;
+  stroke-width: 2;
 `;
+
