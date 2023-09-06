@@ -41,9 +41,29 @@ export default function Block() {
     if (!selectedBlock1) {
       setSelectedBlock1(block);
     } else if (!selectedBlock2 && block.id !== selectedBlock1.id) {
-      setSelectedBlock2(block);
-      // Ao selecionar o segundo bloco, crie a linha
-      renderSvgLines(selectedBlock1, block);
+      if (svgLines.length === 0 ) {
+        setSelectedBlock2(block);
+        renderSvgLines(selectedBlock1, block);
+        setSelectedBlock1(null);
+        setSelectedBlock2(null);
+      } else {
+        setSelectedBlock2(block);
+
+        let indexRemove = null; 
+        const verifyRepeat = svgLines.some((element, index) => {
+          indexRemove = index;
+          return (element.start === selectedBlock1 && element.end === block) || (selectedBlock1 === element.end && block === element.start)
+        })
+        if (!verifyRepeat) {
+          renderSvgLines(selectedBlock1, block);
+          setSelectedBlock1(null);
+          setSelectedBlock2(null);
+        } else {
+          svgLines.splice(indexRemove, 1);
+          setSelectedBlock1(null);
+          setSelectedBlock2(null);
+        }
+      }
     } else {
       setSelectedBlock1(block);
       setSelectedBlock2(null);
@@ -135,19 +155,28 @@ export default function Block() {
         style={{ position: 'absolute'}}
       >
         {svgLines && svgLines.map((line, index) => (
-          <line
-            key={index}
-            x1={line.start.x + widthBloco / 2}
-            y1={line.start.y + heightBloco / 2}
-            x2={line.end.x + widthBloco / 2}
-            y2={line.end.y + heightBloco / 2}
-            stroke="blue" // Cor da linha
-            strokeWidth="2" // Espessura da linha
-          />
+          <React.Fragment key={`line_${index}`}>
+            <line
+              x1={line.start.x + widthBloco / 2}
+              y1={line.start.y + heightBloco / 2}
+              x2={line.start.x + widthBloco / 2}
+              y2={line.end.y + heightBloco / 2}
+              stroke="blue"
+              strokeWidth="2"
+            />
+            <line
+              x1={line.start.x + widthBloco / 2}
+              y1={line.end.y + heightBloco / 2}
+              x2={line.end.x + widthBloco / 2}
+              y2={line.end.y + heightBloco / 2}
+              stroke="blue"
+              strokeWidth="2"
+            />
+          </React.Fragment>
         ))}
       </svg>
       {blocks.map((block, index) => (
-        <div key={index}>
+        <div key={block.id}>
           {isEdit ? (
             <Draggable
               bounds={{
