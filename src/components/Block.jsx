@@ -41,6 +41,7 @@ export default function Block() {
     if (!selectedBlock1) {
       setSelectedBlock1(block);
     } else if (!selectedBlock2 && block.id !== selectedBlock1.id) {
+      console.log(svgLines);
       if (svgLines.length === 0 ) {
         setSelectedBlock2(block);
         renderSvgLines(selectedBlock1, block);
@@ -62,7 +63,7 @@ export default function Block() {
           svgLines.splice(indexRemove, 1);
           setSelectedBlock1(null);
           setSelectedBlock2(null);
-        }
+        }       
       }
     } else {
       setSelectedBlock1(block);
